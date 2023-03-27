@@ -1,0 +1,22 @@
+head 
+body 
+    h1 Opgave 15.4
+
+    |Brugere er: 
+    if values .length < 100
+        if values.length >= 10
+            each person in values
+                if person.nationalitet.length === 2
+                    ul
+                        li  Navn: #{person.navn} Alder: #{person.alder} Højde: #{person.højde} Nationalitet: #{person.nationalitet}
+                else
+                    p En/flere person har ikke en gyldig nationalitet
+        else 
+            p Der er ikke nok brugere til at vise listen
+    else 
+        p Der er for mange brugere til at vise listen
+
+    
+  
+    
+        
