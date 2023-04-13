@@ -1,0 +1,57 @@
+script.
+    async function post(url, objekt) {
+    const respons = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(objekt),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (respons.status !== 201) // Created
+        throw new Error(respons.status);
+    return await respons.text();
+    }
+
+    let clickfunction = async (produktId) => {
+    try {
+        await post("http://localhost:8000/tilfoej", { produktId: produktId });
+        window.location.href = "http://localhost:8000/index";
+    } catch (e) {
+        console.log("Fejl"+ e.message);
+    }
+    }
+
+head 
+body 
+    h1 Opgave 16
+    table 
+            tr  
+            th Navn 
+            th Pris
+                each produkt in produkter
+                    tr
+                        td #{produkt.produktNavn}    
+                        td #{produkt.pris}        
+                        td 
+                            button(onclick='clickfunction("' + produkt.Id + '")') Add item
+
+
+    h1 Kurv 
+    table 
+        tr 
+            th Navn 
+            th Pris
+        each kurvProd in kurv
+            each produkt in produkter
+                tr 
+                    if produkt.Id == kurvProd
+                        td #{produkt.name}
+                        td #{produkt.price}
+                    
+    
+  
+    
+        
+        
+
+
