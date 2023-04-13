@@ -1,10 +1,10 @@
 const beskedUrl = 'http://localhost:8000/beskeder/';
-const soegbeskedUrl = 'http://localhost:8000/beskeder/';
-const rumUrl = 'http://localhost:8000/chatrum/';
+// const soegbeskedUrl = 'https://localhost:44367/api/SoegBeskeder/';
+// const rumUrl = 'https://localhost:44367/api/chatRum/';
 
 // const beskedUrl = 'https://beskedserver.azurewebsites.net/api/Beskeder/';
-//const soegbeskedUrl = 'https://beskedserver.azurewebsites.net/api/SoegBeskeder/';
-//const rumUrl = 'https://beskedserver.azurewebsites.net/api/chatRum/';
+const soegbeskedUrl = 'https://beskedserver.azurewebsites.net/api/SoegBeskeder/';
+const rumUrl = 'https://beskedserver.azurewebsites.net/api/chatRum/';
 
 async function get(url) {
     const respons = await fetch(url);
@@ -64,7 +64,7 @@ async function getRum() {
 }
 
 async function postBesked(afsender, tekst, chatrum) {
-    let besked = {afsender:afsender, tekst: tekst, chatrum: chatrum };
+    let besked = {afsender:afsender, tekst: tekst, chatRum: chatrum };
     try {
         let respons = await post(beskedUrl, besked);
         console.log(respons);

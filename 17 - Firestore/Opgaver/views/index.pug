@@ -1,0 +1,14 @@
+html
+  head 
+    title Chatrum
+    script(src="https://cdn.firebase.com/libs/firebaseui/4.0.0/firebaseui.js")
+  body 
+    ul 
+      each b in besked
+        li
+            | #{b.navn}: #{b.besked}
+    form(action="/opgaver" method="post")
+        input(type="text" name="navn" placeholder="Navn")
+        input(type="text" name="besked" placeholder="Besked")
+        input(type="submit" value="Send")
+        

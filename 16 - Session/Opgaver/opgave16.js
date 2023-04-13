@@ -1,54 +1,78 @@
-let express = require("express");
-let app = express();
-let pug = require("pug");
-let path = require("path");
-let sessions = require("express-session");
+import express from "express";
+const app = express();
+import pug from "pug";
+import session from "express-session";
+import path from "path";
+
+const __dirname = "16 - Session/Opgaver";
 
 app.set("view engine", "pug");
-app.set("views", path.join(__dirname, "/views"));
+app.set("views", __dirname + "/views");
 
 app.use(
-  sessions({
-    secret: "hemmelig",
+  session({
+    secret: "randomsessionid",
     saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 20 },
+    cookie: { maxAge: 1000 * 1000 },
     resave: false,
   })
 );
-app.use(express.static(__dirname + "/filer"));
+app.use(express.static(__dirname + "/files"));
 app.use(express.json());
 
-let produkter = [
-  { produktNavn: "Bad Dragon Drogo", pris: 1000, Id: 1 },
-  { produktNavn: "Gewir kyskhedsbælte", pris: 2250, Id: 2 },
-  { produktNavn: "Krølles krølle", pris: 399, Id: 3 },
-  { produktNavn: "Allan", pris: 69420, Id: 4 },
-  { produktNavn: "Ananas", pris: 50, Id: 5 },
-  { produktNavn: "Gehjuice", pris: 977, Id: 6 },
-  { produktNavn: "Blåbær", pris: 50, Id: 7 },
+let products = [
+  { id: "1", name: "Marabou", price: 29 },
+  { id: "2", name: "Frozen Pizza", price: 35 },
+  { id: "3", name: "Icetea 1.5L", price: 5 },
+  { id: "4", name: "Nachos cheese", price: 22 },
+  { id: "5", name: "Shredded chedder", price: 17 },
+  { id: "6", name: "Shredded mozaralla", price: 17 },
 ];
 
-let data = { produkter: produkter };
-
-app.post("/tilfoej", (request, response) => {
-  const { id } = request.body;
-  let kurv = request.session.kurv;
-  if (kurv == undefined) {
-    kurv = [];
+app.post("/login", (request, response) => {
+  const { name, password } = request.body;
+  if (password === "test1234" && name) {
+    request.session.name = name;
+    response.status(201).send(["login ok!"]);
+  } else {
+    response.sendStatus(401);
   }
-  kurv.push(id);
-  request.session.kurv = kurv;
-  response.status(201).send(["added"]);
 });
 
-app.get("/index", (request, response) => {
-  let kurv = request.session.cart;
-  if (kurv == undefined) {
-    kurv = [];
+app.post("/add", (request, response) => {
+  let name = request.session.name;
+  if (name !== undefined) {
+    const { id } = request.body;
+    let cart = request.session.cart;
+    if (cart == undefined) {
+      cart = { name: name, cart: [], products: products };
+    }
+    for (let product of cart.products) {
+      if (product.id == id) {
+        cart.cart.push(product);
+      }
+    }
+    request.session.cart = cart;
+    response.status(201).send(["added"]);
+  } else {
+    response.redirect("/index.html");
   }
-  let data = { produkter: produkter, kurv: kurv };
-  response.render("index", data);
 });
 
-app.get("/index");
-app.listen(8000, () => console.log("listening on port 8000"));
+app.get("/shop", (request, response) => {
+  let name = request.session.name;
+  if (name !== undefined) {
+    let cart = request.session.cart;
+    if (cart == undefined) {
+      cart = { name: name, cart: [], products: products };
+    }
+    products.cart = cart;
+    response.render("index", cart);
+  } else {
+    response.redirect("/index.html");
+  }
+});
+
+app.listen(8181, () => {
+  console.log("Running...");
+});
