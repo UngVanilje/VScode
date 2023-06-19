@@ -1,0 +1,59 @@
+/* Styles for the body */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1f1;
+}
+
+/* Styles for the header */
+h1 {
+  text-align: center;
+  margin: 20px 0;
+}
+
+/* Styles for the quote container */
+#getQuote {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 500px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for the random quote table */
+#randomQuote {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+#randomQuote th,
+#randomQuote td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+#randomQuote th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  text-align: left;
+}
+
+/* Styles for the "New quote" button */
+#getNewQuote {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#getNewQuote:hover {
+  background-color: #45a049;
+}
